@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 六大招叫你流利说德语 
+title: 六大招教你流利说德语 
 date: 2018-06-20 
 tags: 语言学习  
 ---
