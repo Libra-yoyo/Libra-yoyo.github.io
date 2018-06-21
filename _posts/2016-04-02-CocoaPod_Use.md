@@ -1,176 +1,45 @@
 ---
 layout: post
-title: CocoaPods使用心得
-date: 2016-04-02
-tag: iOS 
+title: 目前流行的机器语言
+date: 2018-06-20
 --- 
+世界编程语言排行榜 ：
+TIOBE编程语言排行榜是编程语言流行趋势的一个指标，每月更新，这份排行榜排名基于互联网有经验的程序员、课程和第三方厂商的数量。排名使用著名的搜索引擎（诸如Google、MSN、Yahoo!、Wikipedia、YouTube以及Baidu等）进行计算。请注意这个排行榜只是反映某个编程语言的热门程度，并不能说明一门编程语言好不好，或者一门语言所编写的代码数量多少。
+这个排行榜可以用来考查你的编程技能是否与时俱进，也可以在开发新系统时作为一个语言选择依据。
+中文名：世界编程语言排行榜 提出者：TIOBE社区 应用学科：计算机 编程语言举例：Java,C,C++,C#,PHP,Python,VB 
 
-### 简介：   
-　本章介绍什么是 `CocoaPods` ,如何使用 `CocoaPods` , 以及 `CocoaPods` 的原理,和使用 `CocoaPods` 时经常出现的一些问题。
+编程语言：
+计算机语言的种类非常的多，总的来说可以分成机器语言，汇编语言，高级语言三大类。计算机每做的一次动作，一个步骤，都是按照已经用计算机语言编好的程序来执行的，程序是计算机要执行的指令的集合，而程序全部都是用我们所掌握的语言来编写的。所以人们要控制计算机一定要通过计算机语言向计算机发出命令。 通用的编程语言有两种形式：汇编语言和高级语言。
+    
+世界编程语言排行榜汇编语言
+汇编语言的实质和机器语言是相同的，都是直接对硬件操作，只不过指令采用了英文缩写的标识符，更容易识别和记忆。它同样需要编程者将每一步具体的操作用命令的形式写出来。汇编程序通常由三部分组成：指令、伪指令和宏指令。汇编程序的每一句指令只能对应实际操作过程中的一个很细微的动作，例如移动、自增，因此汇编源程序一般比较冗长、复杂、容易出错，而且使用汇编语言编程需要有更多的计算机专业知识，但汇编语言的优点也是显而易见的，用汇编语言所能完成的操作不是一般高级语言所能实现的，而且源程序经汇编生成的可执行文件不仅比较小，而且执行速度很快。
+    
+世界编程语言排行榜高级语言
+高级语言是绝大多数编程者的选择。和汇编语言相比，它不但将许多相关的机器指令合成为单条指令，并且去掉了与具体操作有关但与完成工作无关的细节，例如使用堆栈、寄存器等，这样就大大简化了程序中的指令。同时，由于省略了很多细节，编程者也就不需要有太多的专业知识。
+高级语言主要是相对于汇编语言而言，它并不是特指某一种具体的语言，而是包括了很多编程语言，如流行的VB、VC、FoxPro、Delphi等，这些语言的语法、命令格式都各不相同。 像最简单的编程语言PASCAL语言也属于高级语言。高级语言所编制的程序不能直接被计算机识别，必须经过转换才能被执行，按转换方式可将它们分为两类：
+1）解释类：执行方式类似于我们日常生活中的“同声翻译”，应用程序源代码一边由相应语言 [1]  的解释器“翻译”成目标代码(机器语言)，一边执行，因此效率比较低，而且不能生成可独立执行的可执行文件，应用程序不能脱离其解释器，但这种方式比较灵活，可以动态地调整、修改应用程序。
+2）编译类：编译是指在应用源程序执行之前，就将程序源代码“翻译”成目标代码(机器语言)，因此其目标程序可以脱离其语言环境独立执行，使用比较方便、效率较高。但应用程序一旦需要修改，必须先修改源代码，再重新编译生成新的目标文件(* .OBJ)才能执行，只有目标文件而没有源代码，修改很不方便。大多数的编程语言都是编译型的，例如Visual C++、Visual Foxpro、Delphi等。
 
-　Cocoapods 是 OS X 和 iOS 下的一个第三方库管理工具。我们能使用CocoaPods添加被称作 “Pods”的依赖库,并轻松管理它们的版本,CocoaPods会帮我们配置好这些三方库的路径及开发环境,极大的提升了开发者的工作效率。
 
 
-### 安装CocoaPods　    
 
-　Mac下自带ruby,使用ruby的gem命令安装,ruby的软件源被墙了,把官方的ruby源替换成国内的淘宝源。
 
-### 更换Gem源   
 
-```bash
-$ gem sources --remove https://rubygems.org/
-$ gem sources -a https://ruby.taobao.org/
-$ gem sources -l
-```
-* 1.移除掉原有的源（服务器在国外，速度较慢）。
-* 2.等1有反应之后再敲2命令（替换成淘宝上的ruby镜像https）。
-* 3.验证是否成功。成功如下：
 
-```bash
 
-*** CURRENT SOURCES ***
 
-http://ruby.taobao.org/
 
-```
 
-### 更新Gem源
 
-```bash
 
-sudo gem update --system
 
-```
 
-### 安装cocoapods        
 
-```bash
 
-$ sudo gem install cocoapods
-$ pod setup
 
-```
 
-pod setup 在执行时会比较慢，因为Cocoapods 要将它的信息下载到 ~/.cocoapods目录下, 耐心等待…
 
 
-#### 提升cocoapods的安装速度
-
-所有的项目的 Podspec 文件都托管在https://github.com/CocoaPods/Specs。第一次执行 pod setup 时，CocoaPods 会将这些podspec索引文件更新到本地的 ~/.cocoapods/目录下，这个索引文件比较大，有 80M 左右。
-作者akinliu 在 gitcafe 和 oschina 上建立了 CocoaPods 索引库的镜像(在国内),我们可以使用CocoaPods国内的镜像索引，操作时会快多了,如gitcafe：
-
-```bash
-
-pod repo remove master
-pod repo add master https://gitcafe.com/akuandev/Specs.git
-pod repo update
-
-```
-
-
-### 使用cocoapods
-
-cocoapods安装完成后，使用 pod search 命令来验证一下
-
-```bash
-
-pod search AFNetworking
-
-
-```
-
-终端将会有如下结果：
-
-```bash
-
--> AFNetworking (3.0.4)
-A delightful iOS and OS X networking framework.
-pod 'AFNetworking', '~> 3.0.4'
-- Homepage: https://github.com/AFNetworking/AFNetworking
-- Source:   https://github.com/AFNetworking/AFNetworking.git
-- Versions: 3.0.4, 3.0.3, 3.0.2, 3.0.1, 3.0.0, 3.0.0-beta.3, 3.0.0-beta.2,
-3.0.0-beta.1, 2.6.3, 2.6.2, 2.6.1, 2.6.0, 2.5.4, 2.5.3, 2.5.2, 2.5.1, 2.5.0,
-2.4.1, 2.4.0, 2.3.1, 2.3.0, 2.2.4, 2.2.3, 2.2.2, 2.2.1, 2.2.0, 2.1.0, 2.0.3,
-2.0.2, 2.0.1, 2.0.0, 2.0.0-RC3, 2.0.0-RC2, 2.0.0-RC1, 1.3.4, 1.3.3, 1.3.2,
-1.3.1, 1.3.0, 1.2.1, 1.2.0, 1.1.0, 1.0.1, 1.0, 1.0RC3, 1.0RC2, 1.0RC1,
-0.10.1, 0.10.0, 0.9.2, 0.9.1, 0.9.0, 0.7.0, 0.5.1 [master repo]
-- Subspecs:
-- AFNetworking/Serialization (3.0.4)
-- AFNetworking/Security (3.0.4)
-- AFNetworking/Reachability (3.0.4)
-- AFNetworking/NSURLSession (3.0.4)
-- AFNetworking/UIKit (3.0.4)
-
-
--> AFNetworking+AutoRetry (0.0.5)
-Auto Retries for AFNetworking requests
-pod 'AFNetworking+AutoRetry', '~> 0.0.5'
-- Homepage: https://github.com/shaioz/AFNetworking-AutoRetry
-- Source:   https://github.com/shaioz/AFNetworking-AutoRetry.git
-- Versions: 0.0.5, 0.0.4, 0.0.3, 0.0.2, 0.0.1 [master repo]
-
-.........太多了，省略
-
-```
-
-pod search 是CocoaPods的一个搜索命令,我们可以用来搜索任何托管在CocoaPods上的三方库。    
-
-使用CocoaPods时需要新建一个 Podfile 的文件,cd 到 我的Demo项目里，Demo目录下有三个文件
-
-```bash
-
-Demo 、  Demo.xcodeproj  、 DemoTests
-
-```
-
-新建 Podfile
-
-```bash
-
-touch Podfile
-
-```
-
-vim 编辑 Podfile
-
-```bash
-vim Podfile
-```
-由于是新建的 Podfile 里面应该是空白的。然后我们在里面添加依赖库，格式如下：
-
-```bash
-
-platform :ios
-pod 'Reachability',  '~> 3.0.0'
-pod 'ASIHTTPRequest'
-
-```
-
-‘~> 3.0.0’ 是 Reachability 的版本号, 设定了版本号CocoaPods就会下载对应的版本,ASIHTTPRequest没指定版本号,CocoaPods就会下载最新版本的ASIHTTPRequest。
-退出编辑，执行 pod install 下载三方库。
-
-```bash
-
-pod install
-
-```
-完成后我Demo项目下的文件多了几个:
-
-```bash
-Demo 、  Demo.xcodeproj  、 DemoTests （之前的三个）
-
-Demo.xcworkspace 、Podfile 、Podfile.lock 、Pods
-```
-
-这个时候我们打开Demo项目是点击 Demo.xcworkspace 文件了，到此CocoaPods的基本使用已经讲完了，接下来的CocoaPods的原理，和让我们自己的三方库也支持CocoaPods。
-
-待续…
-
-[深入理解 CocoaPods](http://blog.jobbole.com/53365/)    
-
-<br>
-
-转载请注明：[潘柏信的博客](http://baixin) » [点击阅读原文](http://baixin.io/2016/04/CocoaPod_Use/)     
 
 
 
