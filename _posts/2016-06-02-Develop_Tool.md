@@ -1,45 +1,100 @@
 ---
 layout: post
-title: 开发常用工具
+title: 微信小程序的设置底部导航栏
 date: 2016-06-02 11:15:06 
 tag: 工具
 ---
 
-工欲善其事必先利其器，选择一些好的工具可以成吨的提高自己的工作效率。
+微信小程序设置底部导航栏目方法														 
+微信小程序底部想要有一个漂亮的导航栏目，不知道怎么制作，于是百度找到了本篇文章，分享给大家。
 
-### 个人开发常用工具的收集
- 
-* [cmd Markdown](https://www.zybuluo.com/mdeditor) 作业部落出版的Markdown编辑器       
-* [RESTClient](https://github.com/rest-client/rest-client) 一个开源的客户端HTTP调试工具。    
-* [lantern](https://github.com/getlantern/lantern) 蓝灯,一款开源的翻墙工具。    
-* [Charles](https://www.charlesproxy.com/) 青花瓷, 一款HTTP/HTTPS的抓包工具。
-	* [Charles 从入门到精通](http://blog.devtang.com/2015/11/14/charles-introduction/)  
-* [Sublime](http://www.sublimetext.com) 一款强大的IDE,支持Python、JS、JSON格式化等等...更重要的是`Sublime`支持的插件很多。  
-	* [实用的sublime插件集合](http://www.xuanfengge.com/practical-collection-of-sublime-plug-in.html)     
+好了 小程序的头部标题 设置好了，我们来说说底部导航栏是如何实现的。
 
-### 文章配图网站
+我们先来看个效果图
+这里，我们添加了三个导航图标，因为我们有三个页面，微信小程序最多能加5个。
 
-还在为文章配图而苦恼吗？点击店面的网站吧，各种各样的图片帮你丰富你的文章。
+那他们是怎么出现怎么着色的呢？两步就搞定！
 
-[Gratisography](http://www.gratisography.com/) gratisography 里面的图片每周都会更新，很多时尚流行的照片在里面，并且适合用在设计项目上。
+1. 图标准备阿里图标库  http://www.iconfont.cn/collections/show/29
 
-[ssyer](http://www.ssyer.com/home-index.html)国内的网站，不需要翻墙，速度很快，图片最全。完全免费的图片库。
+我们进入该网站，鼠标滑到一个喜欢的图标上面  点击下方的 下载按钮
 
-[Pixabay](https://pixabay.com/) 不同类型的高清摄影照片。
+在弹出框中 选择了 俩个不同颜色的 图标  选择64px大小即可，我选择的是png  然后下载下来 起上别名 
+
+将上述起好名字的图标 保存到 小程序 项目目录中 新创建的 images 文件夹中，准备工作就做好了
+
+2. 更改配置文件我们找到项目根目录中的配置文件 app.json 加入如下配置信息
+
+[html] view plain copy print?
+"tabBar": {  
+   "color": "#a9b7b7",  
+   "selectedColor": "#11cd6e",  
+   "borderStyle":"white",  
+   "list": [{  
+     "selectedIconPath": "images/111.png",  
+     "iconPath": "images/11.png",  
+     "pagePath": "pages/index/index",  
+     "text": "首页"  
+   }, {  
+     "selectedIconPath": "images/221.png",  
+     "iconPath": "images/22.png",  
+     "pagePath": "pages/logs/logs",  
+     "text": "日志"  
+   }, {  
+     "selectedIconPath": "images/331.png",  
+     "iconPath": "images/33.png",  
+     "pagePath": "pages/test/test",  
+     "text": "开心测试"  
+   }]  
+ },  
+ "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle":"white",
+    "list": [{
+      "selectedIconPath": "images/111.png",
+      "iconPath": "images/11.png",
+      "pagePath": "pages/index/index",
+      "text": "首页"
+    }, {
+      "selectedIconPath": "images/221.png",
+      "iconPath": "images/22.png",
+      "pagePath": "pages/logs/logs",
+      "text": "日志"
+    }, {
+      "selectedIconPath": "images/331.png",
+      "iconPath": "images/33.png",
+      "pagePath": "pages/test/test",
+      "text": "开心测试"
+    }]
+  },
 
 
-### UI设计网站
+解释一下 对应的属性信息 tabBar  指底部的 导航配置属性
 
-作为一个开发者，自己写些小程序的时候经常会为没有UI而烦恼，下面就是一些UI设计网站，有新颖的UI界面设计，也有单独的UI元素，icon等。
+color  未选择时 底部导航文字的颜色
 
-[UI中国](http://www.ui.cn/) 国内潮流的UI设计作品。
+selectedColor  选择时 底部导航文字的颜色
 
-[webdesigndev](http://www.webdesigndev.com/) 国外网站设计文章，各种各样的资料看到你眼花缭乱。
+borderStyle  底部导航边框的样色（注意 这里如果没有写入样式 会导致 导航框上边框会出现默认的浅灰色线条）
 
-[dribbble](https://dribbble.com/) 接触过设计的应该都知道，一个很好的UI设计平台。
+list   导航配置数组
 
-[flaticon](http://www.flaticon.com/) 各种icon的设计，一定有你想想要的。
+selectedIconPath 选中时 图标路径
 
-<br>
+iconPath 未选择时 图标路径
 
-转载请注明：[潘柏信的博客](http://baixin) » [点击阅读原文](http://baixin.io/2016/06/Develop_Tool/)
+pagePath 页面访问地址
+
+text  导航图标下方文字
+
+如果要改变更详细的样式 请参看
+
+https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#tabBar
+
+更多微信小程序教程请扫描二维码关注：H5开发者社区
+
+好了，保存 编译  就可以看到上面的效果了。
+
+
+文章标签：						 微信小程序						 
