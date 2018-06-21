@@ -1,161 +1,154 @@
 ---
 layout: post
-title: iOS开发迎来机器学习的春天---TensorFlow 
-date: 2016-07-07 
-tags: 机器学习    
+title: 六大招叫你流利说德语 
+date: 2018-06-20 
+tags: 语言学习  
 ---
+经验分享：六个大招助你流利说德语
+编者按：对很多小伙伴来说，学德语最难的不是笔头功夫，而是拥有一口流利的德语，看到别人张口就来的气势很多人都会心生羡慕。今天我们就来看看一个英语国家的过来人建议的6个流利说德语的技巧~希望会对你有所帮助。ps，因为作者为英语母语者，所以文中如遇到“英语”字样，脑补成“中文”就好啦~
 
-<div align="center">
-	<img src="/images/posts/tfimg/logo.jpg" height="300" width="500">  
-</div> 
-
-　　`人工智能`、`机器学习`都已走进了我们的日常，尤其是愈演愈热的大数据更是跟我们的生活息息相关，做 `人工智能`、`数据挖掘`的人在其他人眼中感觉是很高大上的，总有一种遥不可及的感觉，在我司也经常会听到数据科学部的同事们提到 `机器学习`、`数据挖掘` 之类的词。但这些名词真的跟我们移动开发就没直接关系了吗？             
-　　作为移动开发者来说，无时无刻不被这些名词狠狠地敲打着脆弱的内心。💢 💢 💢  何时才能够将`机器学习`、`深度学习`应用在移动端，敲响移动端`机器学习`工业化的大门呢？
-
-> 想象一下，某一天你身处一个完全陌生的环境，周围都是陌生的事物，而运行在iPhone的某个APP却对这个环境了如指掌，你要做的就是打开这个APP，输入你需要了解的事物，iPhone告诉你这个事物的信息，你也就没有了陌生事物了。世界就在眼前！
-
-如下图：
-<div align="center">
-	<img src="/images/posts/tfimg/image02.png" height="300" width="480" />
-</div> 
-
-上面物体的识别准确率还是蛮不错的，基本识别出了键盘（49%的概率）、鼠标（46%的概率）和水杯（24%的概率）。
-
-但是在某些事物的识别准确度方便却差强人意，比如下图：    
-
-<div align="center">
-　　<img src="/images/posts/tfimg/image01.png" height="300" width="320" />
-</div> 
-　　iPhone 6被识别成了iPod（59%的概率），而iPod的却是不怎么敢认（10%的概率）。想想最崩溃的估计是iPhone 6了，身价直接被降了好几个等级。
-
-<div align="center">
-　　<img src="/images/posts/tfimg/wq.jpg" height="320" width="240" />  
-</div> 
-
-　　上面的例子来自于TensorFlow官方iOSDemo，暂且不评述TensorFlow的识别准确度如何，毕竟它还年轻，但是仅凭其识别能力的体现，也给机器学习在移动端的运用带来了无限的可能。
-
-### 一、TensorFlow（简称TF）
-
-　　去年，Google资深系统专家Jeff Dean在湾区机器学习大会上隆重介绍了其第二代深度学习系统[TensorFlow](http://www.tensorflow.org/)，一时间网络上针对TensorFlow的文章铺天盖地，[揭秘TensorFlow：Google开源到底开的是什么？](http://www.leiphone.com/news/201511/UDLyNds2oSTwM2yZ.html)、[Google开源TensorFlow系统，这背后都有什么门道？](http://www.leiphone.com/news/201511/Voza1pFNQB4bzKdR.html)、[如何评价Google发布的第二代深度学习系统TensorFlow?](http://www.zhihu.com/question/37243838)等等文章，TensorFlow的燎原之火一直在燃烧蔓延着，其[GitHub上的开源库](https://github.com/tensorflow/tensorflow)在此文撰写时，也已经被`star：27550`，`fork：11054`了。🔥 🔥 🔥 🔥 🔥 
-
-不负众望，Google一直宣称平台移植性非常好的TensorFlow，终于在2016年6月27日，发布0.9版本，宣布移动端支持。[TensorFlow v0.9 now available with improved mobile support](https://developers.googleblog.com/2016/06/tensorflow-v09-now-available-with.html)( 有墙💢 )，同时也给出了移动端的[Demo](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/ios_examples)，对于代码为生的程序员，身处大数据处理为主导的[TalkingData](http://www.talkingdata.com/)，也小试身手了一把，下载TensorFlow源码，查看编译指南，开始跳坑、填坑之路，也成就了此篇拙文的产生。
-
-
-### 二、从TensorFlow到iOS静态库
-
-对于iOS平台下如何使用TensorFlow，TensorFlow给出了详细的编译脚本命令，详情请查看[官方文档的命令](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/makefile)。
-
-##### 第一步. 工具准备
-
-`工欲善其事必先利其器`，在开始编译工作之前，需要准备一些编译所必须的工具：
-
-1.  [Homebrew](http://brew.sh/): Mac os x 上包管理工具，具体使用方法可参考[Doc](http://brew.sh/index_zh-cn.html)。
-
-```
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-
-2. Homebrew安装好之后，依次安装三个辅助性编译工具：
-
-```
-$ brew install libtool   
-$ brew install autoconf   
-$ brew install automake   
-```
-
-> 三个工具的含义，请参考：[https://en.wikipedia.org/wiki/GNU_Libtool](https://en.wikipedia.org/wiki/GNU_Libtool)
-
-
-##### 第二步. 克隆TensorFlow
-
-Google以[Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)开源协议将TensorFlow开源在[GitHub](https://github.com/tensorflow/tensorflow)上，我们可以直接使用TensorFlow源码。
-
-在任意你想存放TensorFlow源码的地方（建议不要放在桌面。^_^），clone项目。
-
-```
-$ git clone https://github.com/tensorflow/tensorflow 
-```
-
-##### 第三步. 编译前准备 
-
-　　在TensorFlow的`tensorflow/contrib/makefile/`目录下，有很多可使用的编译脚本，其中`build_all_ios.sh`脚本专门用来一键编译TensorFlow iOS静态库。虽然可以直接使用此脚本进行一键编译，但是因为有墙，某些依赖需要提前做处理。
-
-1. 下载protobuf
-
-    protobuf 是编译前唯一需要特殊处理的依赖库，[点击下载](https://github.com/google/protobuf/archive/master.zip)，下载protobuf之后，解压，备用。
-
-
-2. 下载googlemock
-
-    虽然protobuf编译脚本`autogen.sh`中的googlemock链接地址`https://googlemock.googlecode.com/files/gmock-1.7.0.zip`无法直接下载到，但是细心的人会发现，在浏览器中输入`https://googlemock.googlecode.com/`地址后，会跳转到`https://github.com/google/googlemock`地址，google在GiHub上的仓库地址。而GitHub上的仓库，我们可以直接的下载，克隆等。
-
-    我们直接在GitHub上下载googlemock([点击下载](https://github.com/google/googlemock/archive/master.zip))，下载完成后，修改压缩包名字为`gmock-1.7.0.zip`，修改后将此压缩包移至上一步protobuf文件夹目录下，备用。
-
-3. 修改下载依赖脚本，移除protobuf的下载
-
-	在`tensorflow/contrib/makefile/`目录下，`download_dependencies.sh`脚本用来下载相关依赖，打开此脚本文件，注释掉或者直接删掉`git clone https://github.com/google/protobuf.git ${DOWNLOADS_DIR}/protobuf`部分，目的是不让脚本去下载protobuf。
-
-	上面三步准备好后，接下来就进入静态库编译了。
-
-##### 第四步. 一键编译  
-
-　　前面已经知道在TensorFlow文件夹`tensorflow/contrib/makefile/`目录下的`build_all_ios.sh`脚本是用来编译iOS静态库的脚本，因此可以直接执行此脚本，开始静态库的编译工作了。
-
-　　但是有一个问题大家可能会发现，由于编译TensorFlow需要用到protobuf，但是protobuf使我们自己手动下载的，该怎么让手动下载的protobuf能够直接让`build_all_ios.sh`脚本使用呢？
-
-　　答案是`复制、粘贴`。可能有些low，但是有效。执行命令 `build_all_ios.sh`之后，立即把之前手动下载的protobuf文件夹拷贝进`tensorflow/contrib/makefile/downloads`目录。（放心，你拷贝的速度会很快，不会影响编译的执行的。^_^） 
-
-```
-$ build_all_ios.sh    
-```
-
-　　一切准备就绪，接下来就是静静的等待编译完成了。在Mac编译的过程中，建议插上电源，最好不要让设备休眠断电，也最好不要去干别的东西，出去溜达一圈，回来后就看到战果了。
-
- 编译完成之后，会在`tensorflow/contrib/makefile/gen/`目录下看到编译的结果，关于这些静态库该如何使用，自己的项目如何应用，请参考[TensorFlow iOS Examples](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/ios_examples)。
-
-
-### 三、遇到的问题
-
-1、googlecode.com被墙了，需要翻墙！（目前测试挂了VPN也没用），这也是上面编译前准备为什么要那么做的原因。
-
-```
-curl: (7) Failed to connect to googlemock.googlecode.com port 443: Operation timed out
-```
-
-解决： 请参考 『第三步. 编译前准备』。
-
-2、没有Xcode。
-
-```
-xcrun: error: SDK "iphoneos" cannot be located
-xcrun: error: SDK "iphoneos" cannot be located
-xcrun: error: unable to lookup item 'PlatformPath' in SDK 'iphoneos'
-+ IPHONEOS_PLATFORM=
-```
-
-解决：安装Xcode，从上面报错的命令中可以看到，在编译静态库的过程中使用了`xcrun`，而此命令是xCode本身具有的能力。
-
-3、你的Xcode版本不是7.3或以后，或者你有多个Xcode，而默认的安装路径版本不是7.3或以后。
-
-```
-error: Xcode 7.3.0 or later is required.
-+ exit 1
-```/
-
-解决：更新Xcode至最新版本，并且保证默认路径下是最新/版本。
-
-如果Xcode是7.3，并且没有条件更新Xcode，你可以修改`tensorflow/contrib/makefile/compile_ios_tensorflow.sh` 里的`REQUIRED_XCODE_VERSION=7.3.0`，为`REQUIRED_XCODE_VERSION=7.3`。（这样修改，目前还不确定会不会带来一些其他影响，最好是升级你的Xcode）
-
-
-### 四、参考链接 
  
 
-* [TensorFlow 中文社区](http://tensorfly.cn/)
-* [TensorFlow for Mobile](https://www.tensorflow.org/mobile.html)
-* [Caffe、TensorFlow、MXnet三个开源库对比](http://chenrudan.github.io/blog/2015/11/18/comparethreeopenlib.html)   
-* [如何评价Tensorflow和其它深度学习系统](http://weibo.com/p/1001603907610737775666)    
-* [深度学习框架大战正在进行，谁将夺取“深度学习工业标准”的荣耀？](http://www.algorithmdog.com/%E8%B0%81%E5%B0%86%E5%A4%BA%E5%8F%96%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%B8%9A%E6%A0%87%E5%87%86%E7%9A%84%E8%8D%A3%E8%80%80)  
+我开始学德语是在五年前去柏林旅游以后。当时我立刻爱上了这个语言以及它的文化，并决定在下个生日之前我要流利地说出德语。
 
-<br>
+我和德语的恋情最后还是从浪漫走向了现实，我们必须要共同努力，让我们的关系发挥作用。
 
-转载请注明：[潘柏信的博客](http://baixin) » [点击阅读原文](http://baixin.io/2016/07/iOSMachineLearning_TensorFlow/)        
+再回首，我意识到要是当初我能知道这些技巧，我一定能省下一半时间掌握德语！
+
+我列了一张学德语必看清单，即使学德语对你来说只是短期的享乐或者随便想想，也建议你看下哦。每个技巧都用原汁原味的德语谚语作标题，如果你还在思考什么时候开始学德语，就赶快开始吧！
+
+1）实践重于理论
+
+Probieren geht über studieren. Gelernt ist gelernt.
+
+大家都知道，说出一门语言要比你从书中学习它时掌握得更快。
+
+德语也是如此，但是有一个重要的警告：你不能为了说而说。
+
+不要听别人告诉你练德语重要的就是说，而不用管犯了多少错误。
+
+有时候对零基础的人来说这是可以的，因为语法对他们来说其实更残酷，但这并不是个好主意。
+
+对德语来说这句话应该改为这样：尽可能多练口语，但要使用正确的句子。
+
+虽然有时候这不太可能，因为你既想让别人明白你说的话，但又找不到准确的词，遇到这种情况时你应该尽可能去表达清楚，再去询问应该如何正确表达。
+
+使用短句从而减少犯错误的机会。
+
+我曾经遵循“只说”的建议，我也因此花了很长的时间才改掉一些坏习惯。
+
+这些都是适合初学者的方法，但因为我一开始就没有用正确的方式学习德语，导致我后面需要用双倍的工作量去改掉坏习惯。
+
+ 
+
+2 ) 开头很容易，坚持才是一门艺术
+
+Anfangen ist leicht, beharren eine Kunst.
+
+刚开始学德语真是有种意想不到的乐趣，聆听嗓间发出有趣的声音，每天都学到新的东西，让你坚信你将在一个月内看德语电影不看字幕。
+
+然后你意识到你的德语已经入了门，但其实现在你才更要完善你讲德语的能力。
+
+这时候看起来你好像还什么都没有学到，也许你想今天学习点新词，或者明天学习一个新概念，但会感觉自己没有什么进步。
+
+此时此刻你一定想放弃了。但是，坚持下去！
+
+你可能没有意识到，其实你的德语水平已经开始有所改善并且德语已经在你的大脑里扎根。你已经可以说的比较流利，各方面也有了进步，但这个进步不是通过你学了多少东西而是通过你能多快表达出脑子里想到的内容而衡量。
+
+这是最困难的一个阶段。但请不要放弃！
+
+ 
+
+3 ) 欲速则不达
+
+Eile mit Weile
+
+我刚学德语时，几乎所有注意力都在词汇上。我说服自己，只要我词汇量大，我就一定能被别人听懂，即使语法是错的。
+
+事实证明，这个想法真的非常可怕。我说话不会绕圈子，实话告诉你们，德语语法真的既复杂又能让人感到沮丧，学习德语语法绝对是你想拖到最后做的事。但是如果你不从一开始就学语法，那日后就很难使用正确的语法。千万不要急于求成。在学德语的过程中，你要坚持练习语法，直到你能自然而然顺利地说出德语来。只有这样你才能不断进步。
+
+ 
+
+4 ) 事实就是这样
+
+ES IST WAS ES IST
+
+不要试着把句子从英语翻译成德语，因为这没什么用，还会让你更加困惑并且养成一些坏习惯，让你更难理解德语中的很多概念。
+
+德语中有很多没理由就是存在的规则，事实就是这样，你必须要接受。
+
+在这种情况下，你只能死记硬背不能理顺的内容。
+
+ 
+
+5 ) 细节决定成败
+
+Der Teufel steckt im Detail
+
+学德语的时候，名词词性也是你必须要学的。如果你还没开始学德语，就看看下面我列出的：
+
+the caterpillar
+the bone
+the fire
+
+die Raupe 毛虫
+der Knochen 骨头
+das feuer 火
+
+你会发现在英语中，定冠词只有一个单词“the”。但是在德语中，对应“the”的有3个基元词（der,das,die），不同情况下你还得使用它们不同的形式，这样就又超过3个了。
+
+这三个单词让名词分为阴性（die）、阳性（der）和中性（das）。有一些技巧可以帮助你判断出单词词性，但不是对所有情况都适用。你最好还是把单词词性都背下来。
+
+你判断一个单词词性的能力决定了你是否掌握了这门语言。这对你要说的每一句话都很重要。具体的我就不细说了，我只想说要是我当初知道这些我一定会有完全不同的体验。
+
+你要记住每一个名词的冠词，就把它想象成这是单词必不可少的部分，这一点非常重要。如果你能做到这一点，学德语对你来说会变得更加容易。
+
+在我买过的所有的德语语法书中，我觉得最好的一本是《English Grammar for Students of German》。
+
+如果你的母语是英语并且想学德语的话，这本书真的会帮助你理解德语语法中一些复杂的地方。
+
+小编碎碎：在这里小编也给大家推荐几本好用的德语语法书>>
+
+ 
+
+6 ) 不要孤注一掷
+
+Setz nicht alles auf eine Karte
+
+不管语言程序、服务和产品怎么说，你都不能只通过一种方式学德语，就算你上一对一课程都不够，你必须要通过各种方式学德语。
+
+以下是我的建议：
+
+Rosetta Stone 罗塞塔石碑
+
+这是一款神奇的软件，我第一年学德语就通过这个软件，它帮助我在词汇上打好了基础。
+
+如果你想有个轻松地开头，就从这里开始吧！即使你完成了所有罗塞塔石碑里的版块，你也不会说出流利的德语，但它也有它的优势：
+
+对完全初学者有好处
+更快给你自信心
+使用方便
+超级有趣！
+听德语广播
+
+搜索一些德语之声，就一直让它作为背景音乐。我之所以推荐给大家听广播上的脱口秀（比如话题关于政治）而不是电视或者电影是因为：
+
+他们更可能会使用合适的语法和句子结构
+他们的德语口音更容易让人听懂
+他们很少用俚语
+比起对话、影像和情节，我们会更容易集中于声音
+阅读德语儿童书籍
+
+对，阅读德语的儿童书，你也许在自己国家的书店很难找到这些书，但是你可以去amazon.de看看。
+
+我是在去德国的时候买的，所以如果你有个德国朋友的话，让他给你带点书、巧克力和咖啡吧。
+
+以下是我推荐读儿童书的原因：
+
+词汇通常更简单
+你能够从头到尾读完一个故事，还能在文中学习新单词
+书中的大量插图可以帮助你理解你不懂的单词
+德语的儿童故事很有趣
+小编推荐：适合初学者看的德语电子书>>
+
+如果你正计划学德语，这些建议会帮助你事半功倍。要是你觉得不需要这些建议，那么：不听老人言，吃亏在眼前。（Wer nicht hören will, muss fühlen.）:-D
